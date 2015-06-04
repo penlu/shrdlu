@@ -8,10 +8,10 @@
 
 (setq parsings 0) ;atom used in the timing package
 
-(SETQ ELSE
-      T
-      SAVESENT
-      NIL
+(SETQ ELSE          ;setq assigns each value to the next, in pairs
+      T             ; so ELSE is now T
+      SAVESENT      ; SAVESENT is now NIL, etc.
+      NIL           ; currently no idea what all of these are, probably lisp config options
       ALTMODE
       (ASCII 27.)
       DOT
@@ -58,7 +58,7 @@
     (LABELTRACE CLAUSE NG VG ADJG PREPG CONJOIN)) 
 
 ;;*PAGE
-
+
 ;;;**********************************************************************
 ;;;            SWITCHES AND SWITCH-SETTING PACKAGES
 ;;;**********************************************************************
@@ -213,7 +213,7 @@
  
 
 ;;*PAGE
-
+
 ;;;*****************************************************************
 ;;;           INITIALIZATION ROUTINES
 ;;;*****************************************************************
@@ -221,8 +221,8 @@
 (DEFUN INITIALSTUFF (version date note) 
        (SUSPEND)
        (CURSORPOS 'C)
-       (TERPRI)
-       (PRINC 'SHRDLU/ VERSION/ )
+       (TERPRI)                     ;newline
+       (PRINC 'SHRDLU/ VERSION/ )   ;slashes are kind of the equivalent of backslash, makes the quote precede a whole literal "SHRDLU VERSION "
        (princ version)
        (princ '/ / / )
        (PRINC 'LOADED/ )
@@ -285,4 +285,4 @@
 (setq w1 (boole 7 w1 020202020202)
       w2 (boole 7 w2 020202020202) )
 (sstatus tty w1 w2)
-
+

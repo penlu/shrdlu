@@ -10,23 +10,50 @@
 ;;;    NEVER NOTICE)
 ;;;
 
-(comment symbol 5000)   ;this file can now be used as a lisp init file via. the jcl line
+(defun comment nil
+    'comment)
+
+; no idea what the following line is about-- not sure what symbol is supposed to be
+; MACLISP docs give comment as a function that returns 'comment
+;(comment symbol 5000)   ;this file can now be used as a lisp init file via. the jcl line
 
 (SETQ *RSET T) 
 
-(DEFUN LOADER (*!?KEY) 
-       (OR (ERRSET (EVAL (LIST 'UREAD
-			       *!?KEY
-			       '>
-			       'DSK
-			       'SHRDLU))
-		   NIL)
-	   (AND (PRINT *!?KEY)
-		(PRINC 'NOT-FOUND)
-		(RETURN NIL)))
-       (LOADX)) 
+; According to MACLISP man, ERRSET has following behavior:
+; errset evaluates its first argument. If no errors occur, the result
+; is cons'ed with nil and returned. If an error occurs during the
+; evaluation of the first argument, the error is prevented from escaping
+; from inside the errset and errset returns nil. errset may also be
+; made to return any arbitrary value by use of the err function.
+; If a second argument is given to errset, it is not evaluated. If it
+; is nil, no error message will be printed if an error occurs during the
+; evaluation of errset's first argument. If the second argument is not
+; nil, or if errset is used with only one argument, any error messages
+; generated will be printed. 
+; So here is an implementation:
+(defmacro errset (error-prone &optional allow-message)
+    `(handler-case ,error-prone
+        (condition (message) (if ,allow-message (princ message) ()))))
+;(princ 'one)
+;(errset (/ 1 0) nil)
+;(princ 'two)
+;(errset (/ 1 0) 'asdf)
+;(princ 'done)
 
-(DEFUN LOADX NIL 
+(DEFUN LOADER (*!?KEY) 
+;       (OR (ERRSET (EVAL (LIST 'UREAD      ; archaic loading function, incredibly confusing
+;			       *!?KEY
+;			       '>
+;			       'DSK
+;			       'SHRDLU))
+;		   NIL)
+;	   (AND (PRINT *!?KEY)
+;		(PRINC 'NOT-FOUND)
+;		NIL))
+;       (LOADX *!?KEY)) 
+    (load *!?KEY))
+
+(DEFUN LOADX (*!?KEY)
        (PROG (*!?H *!?F *!?EOF) 
 	     (SETQ *!?EOF (GENSYM))
 	     (PRINT 'READING)
@@ -42,12 +69,12 @@
 (SETQ VERSION-FILES NIL) 
 
 (DEFUN LOADSHRDLU NIL 
-       (ALLOC '(LIST 60000
-		     FIXNUM
-		     15000
-		     SYMBOL
-		      15000
-                     array 500 ))
+;       (ALLOC '(LIST 60000
+;		     FIXNUM
+;		     15000
+;		     SYMBOL
+;		      15000
+;                     array 500 )) ; memory allocation functions probably no longer necessary here
        (SETQ PURE NIL)
 ;       (MAPC 'LOADER '(PLNR THTRAC))
 ;       (THINIT)
