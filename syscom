@@ -1,5 +1,7 @@
 
-(DECLARE (GENPREFIX SYSCOM)) 
+; following is done to avoid name conflicts, but clisp isn't allowing it
+; so we'll just have to bork it and hope for the best here
+;(DECLARE (GENPREFIX SYSCOM)) 
 
 ;;;*********************************************************************
 ;;;
@@ -100,7 +102,7 @@
 (SETQ PARSEARGS '(CLAUSE MAJOR TOPLEVEL)) 
 
 ;;*page
-
+
 ;;;********************************************
 ;;;
 ;;;   test package !!  -experimental version
@@ -130,12 +132,12 @@
 
 (DEFUN END-OF-FILE-CONDITION NIL 
        (AND ^R (UFILE SHTRCE >))
-       (AND GO-AWAY (VALRET 'U))) 
+       (AND GO-AWAY (VALRET 'ESCESCU))) ; those ESC each used to be ^[... whatever the fuck that is
 
 (SETQ GO-AWAY NIL MOBYTEST-IN-PROGRESS NIL) 
 
 ;;*page
-
+
 ;;;********************************************************************************
 ;;;                        Fancy timing package
 ;;;********************************************************************************
@@ -145,13 +147,13 @@
 	     (OR SH-PRINT-TIME (RETURN T))
 	     (SETQ BASE 10.)
 	     (TERPRI)
-	     (PRINC 'TOTAL/ TIME/ USED:/ )
+	     (PRINC '"TOTAL/ TIME/ USED:/ ")
 	     (PRINC (TIMER RUNTIME (RUNTIME)))
 	     (PRINTC '/ / AMOUNT/ SPENT/ IN/ GARBAGE/ COLLECTION)
 	     (PRINC (TIMER SH-GCTIME (STATUS GCTIME)))
 	     (OR (EQ SH-PRINT-TIME 'FANCY) (RETURN T))
 	     (TERPRI)
-	     (PRINC 'BREAKDOWN:)
+	     (PRINC '"BREAKDOWN:")
 	     (PRINTC '/ / / PARSING)
 	     (PRINC P-TIME)
 	     (PRINTC '/ / / SEMANTICS)

@@ -1,5 +1,6 @@
 
-(DECLARE (GENPREFIX PROGMR)) 
+; see note in SYSCOM
+;(DECLARE (GENPREFIX PROGMR)) 
 
 ;;;**********************************************************
 ;;;
