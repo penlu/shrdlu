@@ -49,8 +49,8 @@
 
 
 
-(DEFUN LBK FEXPR (LABELS) (SETQ LABELBREAK LABELS))
-(DEFUN LABELTRACE FEXPR (A) 
+(defun-fexpr LBK (LABELS) (SETQ LABELBREAK LABELS))
+(defun-fexpr LABELTRACE (A) 
        (MAPC 
 	'(LAMBDA (X) 
 	  (PROG (BODY) 
@@ -93,7 +93,7 @@
 
 (SETQ LABELBREAK NIL)
 
-(DEFUN UNLABELTRACE FEXPR (A) 
+(defun-fexpr UNLABELTRACE (A) 
        (MAPC 
 	'(LAMBDA (X) 
 		 (PROG (BODY) 
@@ -186,7 +186,7 @@
 					   (PEV Y 0. T)))
 			     (REVERSE EVENTLIST))))))
 
-(DEFUN ABBREVIATE FEXPR (A) 
+(defun-fexpr ABBREVIATE (A) 
        (MAPCAR '(LAMBDA (X) 
 			(PUTPROP (READLIST (MAPCAR '(LAMBDA (X Y) X)
 						   (EXPLODE X)
@@ -366,7 +366,7 @@
 	     ((CDR X) (APPLY 'DISP X))
 	     (T (PROG (DPSTOP) (DP (CAR X))))))
 
-(DEFUN TELL FEXPR (A) 
+(defun-fexpr TELL (A) 
        (SHOWTELL A
 		 'CANTELL
 		 'TELLTREE
@@ -384,7 +384,7 @@
 (DEFUN CHARG (X TEXT HELP) 
        (COND ((CDR X) (CADR X)) (T (REQUEST TEXT HELP))))
 
-(DEFUN SHOW FEXPR (A) 
+(defun-fexpr SHOW (A) 
        (SHOWTELL A
 		 'CANSHOW
 		 'SHOWTREE
@@ -888,7 +888,7 @@
 
 (DEFS SCENE SHOW SHOWSCENE)
 
-(DEFUN DEFINE FEXPR (A) 
+(defun-fexpr DEFINE (A) 
        (PROG (FE TYPE MARK REST TR) 
 	     (SETQ A  (COND  (A (CAR A))
                       (T  (REQUEST 'WORD: '( ENGLISH WORD TO

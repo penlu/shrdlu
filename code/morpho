@@ -295,7 +295,7 @@
 
 (DEFUN PROPNAME (X) (EQ (CAR (EXPLODE X)) '=)) 
 
-(DEFUN BCWL FEXPR (A) 
+(defun-fexpr BCWL (A) 
 								       ;DEFINES COMBINATIONS OF WORDS
        (MAPC 
 	'(LAMBDA (X) 
@@ -318,7 +318,7 @@
        (AND ROOT (PUTPROP WORD ROOT 'ROOT))
        WORD) 
 
-(DEFUN BUILDWORDLIST FEXPR (A) 
+(defun-fexpr BUILDWORDLIST (A) 
 								       ;DEFINES WORDS
        (MAPC '(LAMBDA (X) 
 								       ;ROOT IS OPTIONAL

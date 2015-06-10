@@ -37,7 +37,7 @@
 		 (PROG2 (PRINT 'ERROR-IN-FILE) (PRINT *!?H)))
 	     (GO LOOP)))
 
-(DEFUN FLOAD FEXPR (SPECS)
+(defun-fexpr FLOAD (SPECS)
    (TERPRI)
    (PRINC (CAR SPECS))
    (princ '/ )

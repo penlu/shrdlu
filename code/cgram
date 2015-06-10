@@ -1413,7 +1413,7 @@
 	     (RETURN (REBUILD (REVERSE FE) NB N H SM C))))
 
 
-(DEFUN BOTH FEXPR (A) 
+(defun-fexpr BOTH (A) 
        (PROG (END) 
 	     (SETQ END CUT)
 	     (RETURN (PROG (CUT NBB BOTH) 

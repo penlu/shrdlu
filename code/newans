@@ -1219,7 +1219,7 @@ TEST-LOOP
 
 
 
-(DEFUN SAYIFY FEXPR (EXP-LIST) 
+(defun-fexpr SAYIFY (EXP-LIST) 
        (CONS 'SAY
 	     (MAPCAR '(LAMBDA (Y) (EVAL Y)) EXP-LIST)))
 

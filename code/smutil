@@ -32,7 +32,7 @@
 
 (DEFUN IMPERF NIL (ISTENSE C 'IMPERF)) 
 
-(DEFUN BUILD FEXPR (%L) 
+(defun-fexpr BUILD (%L) 
        ;;BUILD CONSTRUCTS AN OSS OR AN RSS FROM ITS ARGUMENTS. 
        ;;; 
        ;;;INPUTS:
@@ -126,7 +126,7 @@
 
 ;;;=============================================================================
 
-(DEFUN RELATION FEXPR (%DEFL) 
+(defun-fexpr RELATION (%DEFL) 
 
        ;;; CONSTRUCTS RSS'S FOR GARDEN VARIETY VERBS.  USED IN DEFINITION OF SAME.
        ;;;
@@ -401,7 +401,7 @@ THE WAY IT WAS.  HENCE THIS
 
 ;;;=========================================================================
 
-(DEFUN ITERATE FEXPR (%L) 
+(defun-fexpr ITERATE (%L) 
        ;; GENERALIZED MAPPING FUNCTION.  APPLIES FUNCTION TO THE
        ;;CARTESIAN PRODUCT OF N LISTS GIVEN AS ARGUMENTS.
        ;;;INPUTS:
@@ -524,7 +524,7 @@ THE WAY IT WAS.  HENCE THIS
 
 ;;;============================================================
 
-(DEFUN OBJECT FEXPR (%DEFL) 
+(defun-fexpr OBJECT (%DEFL) 
 								       ;%DEFL IS THE LIST OF DEFINITION SENSES 
        ;; CONSTRUCTS OSS FOR GARDEN VARIETY NOUNS AND ADJECTIVES. 
        ;;USED IN DEFINITIONS.
@@ -942,7 +942,7 @@ APPROPRIATE RECOMMENDATION USING
 
 ;;;=============================================================
 
-(DEFUN MEASURE FEXPR (MEAS) 
+(defun-fexpr MEASURE (MEAS) 
        ;;USED TO GENERATE ORDINALS -- IT IS CALLED WHEN A MEASURE
        ;;DEFINITION IS EVALLED
        (APPLY 'OBJECT

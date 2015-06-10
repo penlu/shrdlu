@@ -40,7 +40,7 @@
       ;;;    be broken at (before calling)
       ) 
 
-(DEFUN CALLSM FEXPR (SEMANTIC-EXPRESSION) 
+(defun-fexpr CALLSM (SEMANTIC-EXPRESSION) 
        (PROG (RESULT MPLNR-TIME SM-TTIME GC SMNFN) 
 	     (SETQ SMNFN (CAR SEMANTIC-EXPRESSION))
 	     (AND SMNTRACE
@@ -79,7 +79,7 @@
 		    (ERT)))
 	     (RETURN RESULT))) 
 
-(DEFUN MOVE-PT FEXPR (L) 
+(defun-fexpr MOVE-PT (L) 
        (PROG (XX YY L2 EXEC SAVE) 
 	     (SETQ EXEC L)
 	     (SETQ SAVE PT)
@@ -129,7 +129,7 @@
 	FAIL (SETQ PT SAVE)
 	     (RETURN NIL))) 
 
-(DEFUN MOVE-PTW FEXPR (L) 
+(defun-fexpr MOVE-PTW (L) 
        (PROG (EXEC SAVE XX) 
 	     (SETQ SAVE PTW)
 	     (SETQ EXEC L)
@@ -183,7 +183,7 @@
 	     (SETR 'SEMANTICS SEMANTICS NODE)
 	     (RETURN NODE))) 
 
-(DEFUN CQ FEXPR (FEATURE) (MEMQ (CAR FEATURE) FE)) 
+(defun-fexpr CQ (FEATURE) (MEMQ (CAR FEATURE) FE)) 
 
 (DEFPROP CUT
 	 (LAMBDA (A) (PROG (B C) 
@@ -224,7 +224,7 @@
        ;; GET THE ELEMENT OF LIST FOLLOWING MEMBER
        (AND (MEMQ MEMBER LIST) (CDR (MEMQ MEMBER LIST)))) 
 
-(DEFUN FQ FEXPR (A) 
+(defun-fexpr FQ (A) 
        (MAPCAR 
 	(FUNCTION (LAMBDA (X) (OR (MEMQ X FE) (SETQ FE (CONS X FE)))))
 	A)
@@ -251,19 +251,19 @@
 
 (DEFUN NB (NODE) (GETR 'FIRSTWORD NODE)) 
 
-(DEFUN NEXTW FEXPR (A) (EQ (CAR N) (CAR A))) 
+(defun-fexpr NEXTW (A) (EQ (CAR N) (CAR A))) 
 
 (DEFUN NEXTWORD NIL (CAR N)) 					       ;RETURN THE NEXT WORD IN THE SENTENCE
 
 (DEFUN NEXTWORD? (A) (EQ (CAR N) A)) 
 
-(DEFUN NQ FEXPR (A) (MEMQ (CAR A) (FE N))) 
+(defun-fexpr NQ (A) (MEMQ (CAR A) (FE N))) 
 
 (DEFUN ONLY-ONE-WORD-LEFT NIL (AND N (NOT (CDR N)))) 
 
 (DEFUN PARENT (NODE) (GETR 'PARENT NODE)) 
 
-(DEFUN PARSE FEXPR (A) 
+(defun-fexpr PARSE (A) 
        (COND ((MEMQ (CAR A) '(NG CLAUSE VG PREPG ADJG))
 	      (PARSE2 A (MEMQ 'TOPLEVEL A)))
 	     ((PARSE3 A NIL)))) 
@@ -396,7 +396,7 @@
 	     (SETQ A (CDR A))
 	     (GO GO))) 
 
-(DEFUN POP FEXPR (A) 
+(defun-fexpr POP (A) 
        (COND
 	((OR (NULL A) (NULL (CAR A)))
 	 (COND
@@ -421,7 +421,7 @@
 	   T)))
 	((EVAL (CONS 'POPTO A)) (POP)))) 
 
-(DEFUN POPTO FEXPR (A) 
+(defun-fexpr POPTO (A) 
        (PROG (XX) 
 	     (SETQ XX H)
 	LOOP (COND ((EVAL (CONS 'ISQ (CONS 'XX A))))
@@ -466,7 +466,7 @@
        ;;; IF WORD HAS NO ROOT PROPERTY, THE ROOT == WORD
        (OR (GET (CAR X) 'ROOT) (CAR X))) 
 
-(DEFUN RQ FEXPR (A) (SETR 'FEATURES (SETQ FE (SETDIF FE A)) C))        ;REMOVE THE FEATURE A FROM FEATURE LIST OF THE
+(defun-fexpr RQ (A) (SETR 'FEATURES (SETQ FE (SETDIF FE A)) C))        ;REMOVE THE FEATURE A FROM FEATURE LIST OF THE
 								       ;CURRENT NODE
 
 (DEFUN SECONDWORD? (WORD) (AND N (CDR N) (EQ (CADR N) WORD))) 
@@ -478,7 +478,7 @@
 
 (DEFUN SM (NODE) (GETR 'SEMANTICS NODE)) 
 
-(DEFUN TRNSF FEXPR (A) 
+(defun-fexpr TRNSF (A) 
        (SETR 'FEATURES
 	     (SETQ FE (UNION (MEET A (FE PT)) FE))
 	     C)) 

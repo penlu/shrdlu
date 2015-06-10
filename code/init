@@ -40,9 +40,17 @@
 ;(errset (/ 1 0) 'asdf)
 ;(princ 'done)
 
+; This only becomes a problem later, but we also lack FEXPRs in Common Lisp.
+; So here's a defun-fexpr macro which should be used to replace every DEFUN
+; that was supposed to produce a FEXPR. If I did this right, then the args
+; shouldn't be evaluated unless the function evaluates them...
+(defmacro defun-fexpr (name args body)
+   `(defmacro ,name ,args 
+        ,body))
+
 (DEFUN LOADER (*!?KEY) 
 ;       (OR (ERRSET (EVAL (LIST 'UREAD      ; archaic loading function, incredibly confusing
-;			       *!?KEY
+;			       *!?KEY                   ; especially for lack of documentation... 1974 man says it's out of date
 ;			       '>
 ;			       'DSK
 ;			       'SHRDLU))
