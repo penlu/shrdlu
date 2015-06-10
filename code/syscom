@@ -3,6 +3,7 @@
 ; so we'll just have to bork it and hope for the best here
 ;(DECLARE (GENPREFIX SYSCOM)) 
 
+; oh man, it's systems time. probably most of this is inapplicable junk now
 ;;;*********************************************************************
 ;;;
 ;;;                 SYSCOM    - TOPLEVEL AND GENERAL UTILITY FUNCTIONS
@@ -141,6 +142,7 @@
 ;;;********************************************************************************
 ;;;                        Fancy timing package
 ;;;********************************************************************************
+; timing seems... brittly system-dependent
 
 (DEFUN SHRDLU-TIMER NIL 
        (PROG (BASE) 
@@ -233,6 +235,7 @@
 ;;;****************************************************************
 ;;;           specialized and not so, output routines
 ;;;**************************************************************** 
+; do these apply any longer
 
 (DEFUN % NIL 							       ;THIS FUNCTION PRINTS THE CURRENT SENTENCE
        (TERPRI)
@@ -294,13 +297,14 @@
 	     (AND DPSTOP (ERT))
 	     (RETURN '*))) 
 
-(DEFUN FEXPR DSAY (L) (APPLY 'SAY L)) 
+(defun-fexpr DSAY (L) (APPLY 'SAY L)) 
 
 ;;*page
 
 ;;;****************************************************************
 ;;;        functions for hand-tailored garbage collection
 ;;;****************************************************************
+; do we actually need this anymore
 
 (DEFUN FORGET NIL 
        (SETQ LASTSENT NIL 

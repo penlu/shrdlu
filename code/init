@@ -48,6 +48,20 @@
    `(defmacro ,name ,args 
         ,body))
 
+; DEFPROP has become a different animal in common lisp, which thankfully still 
+; supports property lists... now the form for
+;    (DEFPROP x y z)
+; is
+;    (setf (get x z) y)
+; where the property z of x is being set to y. None of x, y, or z is evaluated,
+; so... a macro:
+(defmacro DEFPROP (x y z)
+    `(setf (get ',x ',z) ',y))
+
+; and PUTPROP, which does evaluate its inputs
+(defun PUTPROP (x y z)
+    (setf (get x z) y))
+
 (DEFUN LOADER (*!?KEY) 
 ;       (OR (ERRSET (EVAL (LIST 'UREAD      ; archaic loading function, incredibly confusing
 ;			       *!?KEY                   ; especially for lack of documentation... 1974 man says it's out of date
