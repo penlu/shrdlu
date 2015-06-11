@@ -1,5 +1,5 @@
-
-(declare (genprefix morpho))
+; common lisp no longer supports genprefix
+;(declare (genprefix morpho))
 
 
 ;;;********************************************************************************

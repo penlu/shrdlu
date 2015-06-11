@@ -306,18 +306,19 @@
 ;;;****************************************************************
 ; do we actually need this anymore
 
-(DEFUN FORGET NIL 
-       (SETQ LASTSENT NIL 
-	     LASTREL NIL 
-	     BACKREF NIL 
-	     BACKREF2 NIL 
-	     LASTTIME NIL 
-	     LASTPLACE NIL)
-       (SETQ LASTSENTNO 0.)
-       (MAPC '(LAMBDA (PN) (MAPC '(LAMBDA (PROP) (REMPROP PN PROP))
-				 '(BIND LASTBIND)))
-	     '(IT THEY ONE))
-       (AND EVENTLIST (PROGN (THFLUSH HISTORY) (STARTHISTORY)))) 
+; turns out FORGET is never used
+;(DEFUN FORGET NIL 
+;       (SETQ LASTSENT NIL 
+;	     LASTREL NIL 
+;	     BACKREF NIL 
+;	     BACKREF2 NIL 
+;	     LASTTIME NIL 
+;	     LASTPLACE NIL)
+;       (SETQ LASTSENTNO 0.)
+;       (MAPC '(LAMBDA (PN) (MAPC '(LAMBDA (PROP) (REMPROP PN PROP))
+;				 '(BIND LASTBIND)))
+;	     '(IT THEY ONE))
+;       (AND EVENTLIST (PROGN (THFLUSH HISTORY) (STARTHISTORY)))) 
 
 ;;; THIS FUNCTION HAS ALSO INCLUDED A CALL TO "PLNRCLEAN"
 ;;; TO SCRUB AWAY THE EVENTLIST - BUT THE DETAILS OF ITS
@@ -365,7 +366,7 @@
 	     (AND C
 		  (GREATERP C B)
 		  (PUTPROP A B 'MAKESYM)
-		  (DO I B (ADD1 I) (EQUAL I C) (REMOB (MAKESYM A))))
+		  (DO ((I B (ADD1 I))) ((EQUAL I C)) (REMOB (MAKESYM A)))) ; adapted from old form of do
 	     (RETURN (PUTPROP A SAVE 'MAKESYM)))) 
 
 ;;*PAGE
@@ -518,15 +519,16 @@
 
 (DEFPROP MOD (LAMBDA (A B) (UNION (SETDIF A (CADR B)) (CAR B))) EXPR) 
 
-(DEFUN NTH (NUM LIST) 
-       (COND ((ATOM LIST) (ERT NTH - ILLEGAL LIST))
-	     ((LESSP NUM 1.) (ERT NTH - ILLEGAL NUMBER)))
-       (PROG NIL 
-	UP   (COND ((EQUAL NUM 1.) (RETURN (CAR LIST)))
-		   ((SETQ LIST (CDR LIST))
-		    (SETQ NUM (SUB1 NUM))
-		    (GO UP))
-		   (T (ERT NTH - LIST TOO SHORT))))) 
+; already implemented by clisp
+;(DEFUN NTH (NUM LIST) 
+;       (COND ((ATOM LIST) (ERT NTH - ILLEGAL LIST))
+;	     ((LESSP NUM 1.) (ERT NTH - ILLEGAL NUMBER)))
+;       (PROG NIL 
+;	UP   (COND ((EQUAL NUM 1.) (RETURN (CAR LIST)))
+;		   ((SETQ LIST (CDR LIST))
+;		    (SETQ NUM (SUB1 NUM))
+;		    (GO UP))
+;		   (T (ERT NTH - LIST TOO SHORT))))) 
 
 (DEFPROP PR1
 	 (LAMBDA (A) 
@@ -605,14 +607,15 @@
 				    (GO GO)))))
 	 EXPR) 
 
-(DEFUN UNION (A B) 
-       (PROG (SET) 
-	     (SETQ SET (REVERSE A))
-	GO   (COND ((NULL B) (RETURN (REVERSE SET)))
-		   ((MEMQ (CAR B) SET))
-		   ((SETQ SET (CONS (CAR B) SET))))
-	     (SETQ B (CDR B))
-	     (GO GO))) 
+; hopefully this is the same as the clisp union... commenting
+;(DEFUN UNION (A B) 
+;       (PROG (SET) 
+;	     (SETQ SET (REVERSE A))
+;	GO   (COND ((NULL B) (RETURN (REVERSE SET)))
+;		   ((MEMQ (CAR B) SET))
+;		   ((SETQ SET (CONS (CAR B) SET))))
+;	     (SETQ B (CDR B))
+;	     (GO GO))) 
 
 (DEFPROP WALLP
 	 (LAMBDA (A) (PROG (ALIST LINEL) 
@@ -646,10 +649,12 @@
 			   (GO A)))
 	 EXPR) 
 
-(DEFUN SPACE (N) 
+; SPACE is already defined in clisp
+; evidently this is not used anyway
+(DEFUN printspaces (N) 
        (PROG (NN) 
 	A    (COND ((GREATERP N 0.)
 		    (PRINC '/ )
 		    (SETQ N (SUB1 N))
 		    (GO A))))) 
-
+
