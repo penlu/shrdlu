@@ -370,14 +370,16 @@
 	     (RETURN (PUTPROP A SAVE 'MAKESYM)))) 
 
 ;;*PAGE
-
+
 ;;;****************************************************************
 ;;;        a most complete and sophisticated break package
 ;;;****************************************************************
 
 (DEFPROP THERT ERT FEXPR) 
 
-(defun-fexpr ERT (MESSAGE) (ERTEX MESSAGE NIL T)) 		       ;ALWAYS STOPS, NEVER CAUSES ABORTION. USED FOR
+; sometimes ERT is called without a message, i.e. (ERT)
+; ERTEX handles this by mapping print3 over messages, so missing message is no problem
+(defun-fexpr ERT (&optional MESSAGE) (ERTEX MESSAGE NIL T)) 		       ;ALWAYS STOPS, NEVER CAUSES ABORTION. USED FOR
 								       ;GUARENTEED STOPS AS IN DEBUGGING OR ETAOIN
 
 (defun-fexpr ERTERR (MESSAGE) (ERTEX MESSAGE T NIL)) 		       ;USED FOR KNOWN WIERD STATES SUCH AS CHOP. USES
@@ -390,7 +392,7 @@
 (defun-fexpr GLOBAL-ERR (MESSAGE) 
        (ERTEX (SETQ GLOBAL-MESSAGE MESSAGE) T NIL)) 		       ; MARKES KNOWN INADEQUACIES OF THE SYSTEM.
 								       ;SWITCHABLE STOP, CAUSES ABORTION
-
+
 (DEFUN ERTEX (MESSAGE CAUSE-ABORTION IGNORE-NOSTOP-SWITCH?) 
        (PROG (ERT-TIME GLOP EXP ST-BUFFER BUILDING-ST-FORM ^W ^Q
 	      FIRSTWORD) 

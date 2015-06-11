@@ -18,21 +18,6 @@
 	     (PRINT 'READY)
 	     (TERPRI)
 	     (AND MOBYREAD (IOC Q))
-	CHAR (COND ((EQUAL (TYIPEEK) 24.) (READCH) (ERT) (GO THRU)); "cntrl-x" break
-;left over from CMU
-                   ((= (tyipeek) 3.)
-(or (and mobyread (end-of-file-condition))
-    (bug etaoin: about to read eof)) )
-)
-	     (setq char (cond ((greaterp 123. (setq char (tyi)) 96.) (- char 32.))
-			      ((greaterp 91. char 64.) char)
-			      (t char))
-   	           char (ascii char)
-                   ;;this little hack maps all lowercase letters into uppercase.
-		   ;;a more reasonable thing to do would be to hack the chtrans
-		   ;;property of the current readtable, but this was quicker to
-		   ;;patch.
-                   )
     	     (cond ((EQ char '/ ) (GO WORD))           ;DELIMITER
 		   ((MEMQ CHAR ALTMODE)
 		    (setq char (ascii (uppercase-ify-char (tyi))) )
@@ -86,11 +71,11 @@
 		    (AND WORD (GO WORD))
 		    (GO PUNC)))
 	     (AND
-	      (OR (AND (EQ CHAR '")
+	      (OR (AND (EQ CHAR '"\"")
 		       (NOT ALREADY-BLGING-NEWRD)
 		       (SETQ NEWWORD (SETQ ALREADY-BLGING-NEWRD T))
 		       (GO CHAR))
-		  (AND (EQ CHAR '")
+		  (AND (EQ CHAR '"\"")
 		       ALREaDY-BLGING-NEWRD
 		       (NOT (SETQ ALREADY-BLGING-NEWRD NIL))
 		       (GO WORD))
@@ -132,7 +117,7 @@
 			       (CAR X)))
 		   ((EQ (CAR (LAST WORD)) '=)
 		    (BUILDWORD WRD
-			       (COND ((MEMQ '" WORD)
+			       (COND ((MEMQ '"\"" WORD)
 				      '(PROPN NS POSS))
 				     ('(PROPN NS)))
 			       '((PROPN T))
@@ -143,15 +128,15 @@
 	     ;;;---------------------------------------------
 	     ;;;              MORPHOLOGY CODE
 	     ;;;--------------------------------------------
-	CUT  (COND ((STA WORD '(T " N))
+	CUT  (COND ((STA WORD '(T "\"" N))
 		    (SETQ RD (CDDDR WORD))
 		    (SETQ WORD (CONS '* WORD))
 		    (GO TRY))
-		   ((STA WORD '(S "))
+		   ((STA WORD '(S "\""))
 		    (SETQ WORD (CDDR WORD))
 		    (SETQ POSS WRD)
 		    (GO WORD))
-		   ((STA WORD '("))
+		   ((STA WORD '("\""))
 		    (SETQ WORD (CDR WORD))
 		    (SETQ POSS WRD)
 		    (GO WORD))
@@ -284,17 +269,17 @@
 			    (OR ALTN (SETQ NEWWORD NIL))
 			    (GO PUNC)))
 	     (TERPRI)
-	     (SAY *SORRY I DON/'T KNOW THE WORD ")
+	     (SAY '"SORRY I DON'T KNOW THE WORD \" ")
 	     (PRINC WRD)
-	     (PRINC '/ "/.)
+	     (PRINC '" \"")
 	     (TERPRI)
-	     (SAY PLEASE TYPE <LF> AND CONTINUE THE SENTENCE/.)
+	     (SAY "PLEASE HIT ENTER AND CONTINUE THE SENTENCE.")
 	NOGO (OR (EQUAL (TYI) 10.) (GO NOGO))
 	     (SETQ PUNCT NIL WORD NIL)
 	     (GO DO))) 
 
 (DEFUN PROPNAME (X) (EQ (CAR (EXPLODE X)) '=)) 
-
+
 (defun-fexpr BCWL (A) 
 								       ;DEFINES COMBINATIONS OF WORDS
        (MAPC 
@@ -332,23 +317,23 @@
 ) 
 
 (DEFUN ETNEW NIL 
-       (AND (EQ (CAR WORD) '")
-	    (EQ (CAR (LAST WORD)) '")
+       (AND (EQ (CAR WORD) '"\"")
+	    (EQ (CAR (LAST WORD)) '"\"")
 	    (SETQ WRD (READLIST (CDR (REVERSE (CDR WORD)))))
 	    (BUILDWORD WRD
 		       '(NOUN NS)
 		       '((NOUN (NEWWORD)))
 		       NIL))) 
 
-(SETQ FINAL '(/. ? !)) 
+(SETQ FINAL '("." "?" "!")) 
 
 (SETQ CONSO '(B C D F G H J K L M N P Q R S T V W X Z)) 
 
-0. 
+;0. 
 
 (SETQ LIQUID '(L R S Z V)) 
 
-(SETQ PUNCL '(/. ? : /; " !)) 
+(SETQ PUNCL '("." "?" ":" ";" "\"" "!")) 
 
 (SETQ RUBOUT (ASCII 127.)) 
 
@@ -361,5 +346,5 @@
 
 (SETQ VOWEL '(NIL A E I O U Y)) 
 
-(SETQ SPACE '/ ) 
-
+(SETQ SPACE '" ") 
+
