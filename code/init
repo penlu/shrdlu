@@ -44,9 +44,9 @@
 ; So here's a defun-fexpr macro which should be used to replace every DEFUN
 ; that was supposed to produce a FEXPR. If I did this right, then the args
 ; shouldn't be evaluated unless the function evaluates them...
-(defmacro defun-fexpr (name args body)
+(defmacro defun-fexpr (name args &rest body)
    `(defmacro ,name ,args 
-        ,body))
+        ,@body))
 
 ; DEFPROP has become a different animal in common lisp, which thankfully still 
 ; supports property lists... now the form for
@@ -61,6 +61,11 @@
 ; and PUTPROP, which does evaluate its inputs
 (defun PUTPROP (x y z)
     (setf (get x z) y))
+
+; ASCII evidently takes a number and produces the relevant character
+; implementation
+(defun ascii (n)
+    (code-char n))
 
 (DEFUN LOADER (*!?KEY) 
 ;       (OR (ERRSET (EVAL (LIST 'UREAD      ; archaic loading function, incredibly confusing

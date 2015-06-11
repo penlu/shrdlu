@@ -8,11 +8,6 @@
 
 (setq parsings 0) ;atom used in the timing package
 
-; ASCII evidently takes a number and produces the relevant character
-; implementation
-(defmacro ascii (n)
-    (code-char n))
-
 (SETQ ELSE          ;setq assigns each value to the next, in pairs
       T             ; so ELSE is now T
       SAVESENT      ; SAVESENT is now NIL, etc.

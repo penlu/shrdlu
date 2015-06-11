@@ -379,7 +379,7 @@
 
 ; sometimes ERT is called without a message, i.e. (ERT)
 ; ERTEX handles this by mapping print3 over messages, so missing message is no problem
-(defun-fexpr ERT (&optional MESSAGE) (ERTEX MESSAGE NIL T)) 		       ;ALWAYS STOPS, NEVER CAUSES ABORTION. USED FOR
+(defun ERT (&optional MESSAGE) (ERTEX MESSAGE NIL T)) 		       ;ALWAYS STOPS, NEVER CAUSES ABORTION. USED FOR
 								       ;GUARENTEED STOPS AS IN DEBUGGING OR ETAOIN
 
 (defun-fexpr ERTERR (MESSAGE) (ERTEX MESSAGE T NIL)) 		       ;USED FOR KNOWN WIERD STATES SUCH AS CHOP. USES
