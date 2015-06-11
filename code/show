@@ -1,4 +1,4 @@
-(declare (genprefix show))
+;(declare (genprefix show))
 
 ;;;  quickies 
 
@@ -11,32 +11,32 @@
 (princ '//)
 (princ parsings))
 
-(defun parsetrace labels
+(defun parsetrace (labels)
 (cond ((= (arg nil) 0)
        (setq parsetrace 'all))
       (t (setq parsetrace (listify labels))) ))
 
-(defun parsebreak labels
+(defun parsebreak (labels)
 (cond ((= (arg nil) 0)
        (setq parsebreak 'all))
       (t (setq parsebreak (listify labels))) ))
 
-(defun fancytimer off?
+(defun fancytimer (off?)
 (cond ((= (arg nil) 1)
        (setq sh-print-time nil))
       (t (setq sh-print-time 'fancy)) ))
 
-(defun totaltime off?
+(defun totaltime (off?)
 (cond ((= (arg nil) 1) 
        (setq sh-print-time nil))
       (t (setq sh-print-time t)) ))
 
-(defun smntrace off?
+(defun smntrace (off?)
 (cond ((= (arg nil) 1)
        (setq smntrace nil))
       (t (setq smntrace t)) ))
 
-(defun smnbreak off?
+(defun smnbreak (off?)
 (cond ((= (arg nil) 1)
        (setq smnbreak nil))
       (t (setq smnbreak t)) ))
@@ -44,7 +44,7 @@
 
 
 
-
+; all these things beginning with "CHARG" are pretty awful
 
 
 
@@ -62,7 +62,7 @@
 		       (SETQ BODY (CDR (GET X 'INTERPRET))))
 		      ((GET X 'EXPR)
 		       (SETQ BODY (CDDR (CADDR (GET X 'EXPR)))))
-		      (T (PRINC 'CAN/'T/ BE-) (GO TRACED)))
+		      (T (PRINC '"CAN'T BE-") (GO TRACED)))
 		(MAP '(LAMBDA (Y) 
 			      (AND (ATOM (CAR Y))
 				   (RPLACD Y
@@ -99,7 +99,7 @@
 		 (PROG (BODY) 
 		       (PRINT X)
 		       (COND ((NOT (GET X 'LABELTRACED))
-			      (PRINC 'ISN/'T/ ALLREADY-)
+			      (PRINC '"ISN'T ALLREADY-")
 			      (GO TRACED))
 			     ((GET X 'INTERPRET)
 			      (SETQ BODY (CDR (GET X
@@ -107,7 +107,7 @@
 			     ((GET X 'EXPR)
 			      (SETQ BODY (CDDR (CADDR (GET X
 							   'EXPR)))))
-			     (T (PRINC 'CAN/'T/ BE-)
+			     (T (PRINC '"CAN'T BE-")
 				(GO TRACED)))
 		       (MAP '(LAMBDA (Y) (AND (ATOM (CAR Y))
 					      (RPLACD Y (CDDR Y))))
@@ -123,44 +123,44 @@
       TELL
       '(LAMBDA (X) (APPLY 'TELLABLE
 			 (LIST (CHARG X
-				      'CONCEPT:
-				      '(ANY PLANNER
-					    GOAL
-					    PATTERN
-					    BEGGININGWHITH
-					    THIS
-					    CONCEPT
-					    NAME
-					    CAN
-					    BE
-					    ACCEPTED
-					    BY
-					    THE
-					    SYSTEM
-					    ASNEW
-					    INFORMATION
-					    --
-					    BEWARE
-					    OF
-					    INTERACTIONS
-					    WITH
-					    SPECIALHACKS
-					    FOR
-					    LOCATION/,
-					    ETC/.))))))
+				      '"CONCEPT:"
+				      '("ANY PLANNER"
+					    "GOAL"
+					    "PATTERN"
+					    "BEGINNING WITH"
+					    "THIS"
+					    "CONCEPT"
+					    "NAME"
+					    "CAN"
+					    "BE"
+					    "ACCEPTED"
+					    "BY"
+					    "THE"
+					    "SYSTEM"
+					    "AS NEW"
+					    "INFORMATION"
+					    "--"
+					    "BEWARE"
+					    "OF"
+					    "INTERACTIONS"
+					    "WITH"
+					    "SPECIAL HACKS"
+					    "FOR"
+					    "LOCATION,"
+					    "ETC."))))))
 
 (DEFUN PEV (EV COL TOP) 
        (TERPRI)
        (TAB COL)
        (PRINC EV)
-       (PRINC '/ / )
+       (PRINC '"  ")
        (PRINC (GET EV 'TYPE))
-       (PRINC '/ / TIME:/ )
+       (PRINC '"  TIME: ")
        (PRINC (GET EV 'START))
-       (PRINC '/ TO/ )
+       (PRINC '" TO ")
        (PRINC (GET EV 'END))
        (AND TOP
-	    (PRINC '/ REASON:/ )
+	    (PRINC '" REASON: ")
 	    (PRINC (GET EV 'WHY)))
        (MAPC '(LAMBDA (X) (AND (EQ EV (GET X 'WHY))
 			       (PEV X (PLUS COL 8.) NIL)))
@@ -170,15 +170,15 @@
       SHOW
       (LAMBDA (X) 
 	      (SETQ X (CHARG X
-			     'EVENT:
-			     '(EVENT TO
-				     BE
-				     DISPLAYED
-				     --<LF>
-				     FOR
-				     ENTIRE
-				     EVENT
-				     LIST)))
+			     '"EVENT:"
+			     '("EVENT TO"
+				     "BE"
+				     "DISPLAYED"
+				     "--<LF>"
+				     "FOR"
+				     "ENTIRE"
+				     "EVENT"
+				     "LIST")))
 	      (COND (X (PEV X 0. T))
 		    (T (MAPC '(LAMBDA (Y) 
 				      (AND (EQ 'COMMAND
@@ -253,7 +253,7 @@
 	      '(:B1 :B2 :B3 :B4 :B5 :B6 :B7 :B10 :BOX))
 	     (TERPRI)
 	     (SAY THE HAND IS GRASPING)
-	     (PRINC '/ )
+	     (PRINC '" ")
 	     (PRINC (COND ((SETQ OBJ
 				 (THVAL '(THGOAL (#GRASPING $_X))
 					'((X THUNBOUND))))
@@ -268,7 +268,7 @@
        (COND ((NULL A) (SHOWTELLCHOICE))
 	     ((GET (CAR A) ACTION)
 	      (APPLY (GET (CAR A) ACTION) (LIST A)))
-	     ((PRINTEXT '(I DON/'T KNOW HOW TO))
+	     ((PRINTEXT '(I "DON'T" KNOW HOW TO))
 	      (PRINT2 ACTION)
 	      (PRINT2 (CAR A))))
        '*)
@@ -314,7 +314,7 @@
 		  (GO READ))
 	GO   (OR (MEMBER (READCH) BREAKCHARS) (GO GO))
 	CHOICES
-	     (PRINTEXT '(THE CHOICES ARE:))
+	     (PRINTEXT '(THE CHOICES "ARE:"))
 	     (PRINT CHOICES)
 	     (GO TOP)))
 
@@ -335,7 +335,7 @@
 
 (DEFUN SHOWPROP (X) 
        (COND ((NULL X)
-	      (SHOWPROP (CONS (REQUEST 'ATOM:
+	      (SHOWPROP (CONS (REQUEST '"ATOM:"
 				       '(THE NAME
 					     OF
 					     THE
@@ -347,7 +347,7 @@
 					     WANT
 					     TO
 					     EXAMINE))
-			      (LISTIFY (REQUEST 'PROPERTY:
+			      (LISTIFY (REQUEST '"PROPERTY:"
 						'(THE PROPERTY
 						      (IES)
 						      YOU
@@ -545,7 +545,7 @@
 (DEFS VALUE
       SHOW
       (LAMBDA (X) (DISP (EVAL (CHARG X
-				     'EXPRESSION:
+				     '"EXPRESSION:"
 				     '(EXPRESSION TO
 						  BE
 						  EVALUATED
@@ -557,7 +557,7 @@
 (DEFS FUNCTION
       TELL
       (LAMBDA (X) (SETQ X (LIST (CHARG X
-				       'FUNCTION:
+				       '"FUNCTION:"
 				       '(LISP FUNCTION
 					      WHOSE
 					      ACTION
@@ -593,7 +593,7 @@
 							STOP
 							ON
 							ENTRY
-							ANDEXIT/,
+							"ANDEXIT,"
 							ACCEPTING
 							USER
 							COMMANDS
@@ -609,7 +609,7 @@
       SHOW
       (LAMBDA (X) (APPLY 'GB
 			 (LIST (CHARG X
-				      'FUNCTION:
+				      '"FUNCTION:"
 				      '(LISP FUNCTION
 					     WHOSE
 					     LISP
@@ -623,7 +623,7 @@
       TELL
       (LAMBDA (X) (THVAL (LIST 'THASSERT
 			       (CHARG X
-				      'ASSERTION:
+				      '"ASSERTION:"
 				      '(PLANNER ASSERTION
 						TO
 						BE
@@ -635,7 +635,7 @@
 			 NIL))
       SHOW
       (LAMBDA (X) (DA (CHARG X
-			     'ATOM:
+			     '"ATOM:"
 			     '(SHOW ALL
 				    ASSERTIONS
 				    WHICH
@@ -649,7 +649,7 @@
       DEFINETHEOREM
       SHOW
       (LAMBDA (X) (DISP (GET (CHARG X
-				    'THEOREM-NAME:
+				    '"THEOREM-NAME:"
 				    '(PLANNER THEOREM
 					      WHOSE
 					      DEFINITION
@@ -695,7 +695,7 @@
       SHOW
       (LAMBDA (X) (APPLY 'DG
 			 (OR (CDR X)
-			     (LIST(REQUEST 'UNIT:
+			     (LIST(REQUEST '"UNIT:"
 				      '(GRAMMAR UNIT
 						WHOSE
 						PROGRAM
@@ -714,12 +714,12 @@
 (DEFS WORD
       SHOW
       (LAMBDA (X) (DP (CHARG X
-			     'WORD:
+			     '"WORD:"
 			     '(ENGLISH WORD IN THE VOCABULARY))))
       TELL
       (LAMBDA (X) (APPLY 'DEFINE
 			 (LIST (CHARG X
-				      'WORD:
+				      '"WORD:"
 				      '(ENGLISH WORD
 						TO
 						BE
@@ -750,11 +750,11 @@
       (LAMBDA (X) (OR (CDR X)
 		      (SETQ X (LIST (REQUEST '(TYPE LIST
 						    OF
-						    LABELS/,
+						    "LABELS,"
 						    OR
 						    ON
 						    OR
-						    OFF:)
+						    "OFF:")
 					     '(WATCHES PARSER
 						       GO
 						       PAST
@@ -776,7 +776,7 @@
 				     TO
 				     PARSE
 				     SYNTACTIC
-				     UNITS/,
+				     "UNITS,"
 				     INCLUDING
 				     FAILURES))
 			 (TRACE PARSE)
@@ -787,7 +787,7 @@
        (SETQ SAVEPT PT)
        (APPLY 'MOVE-PT
 	      (LISTIFY (OR X
-			   (REQUEST 'NODE-SPECIFICATION:
+			   (REQUEST '"NODE-SPECIFICATION:"
 				    '(C MEANS
 					CURRENT
 					NODE
@@ -799,7 +799,7 @@
 					PARSED
 					FOR
 					OTHER
-					POSSIBILITIES/,
+					"POSSIBILITIES,"
 					SEE
 					THESIS
 					SECTION
@@ -820,20 +820,20 @@
 		      (T (SETQ X (MAKESYM 'THEOREM))))
 		(NCONC (LIST (QUERY '(WHICH THEOREM TYPE?)
 				    '(THANTE THERASING THCONSE)
-				    '(ANTECEDENT/, ERASING/,
+				    '("ANTECEDENT," "ERASING,"
 						   OR
 						   CONSEQUENT
 						   THEOREM))
-			     (LISTIFY (REQUEST 'VARIABLE-LIST:
+			     (LISTIFY (REQUEST '"VARIABLE-LIST:"
 					       NIL))
-			     (REQUEST 'PATTERN:
+			     (REQUEST '"PATTERN:"
 				      '(A LIST
 					  ENCLOSED
 					  IN
-					  PARENS/,
+					  "PARENS,"
 					  LIKE
 					  (#IS $?X #ZOG)))
-			     (REQUEST 'BODY:
+			     (REQUEST '"BODY:"
 				      '(LIST OF
 					     MICROPLANNER
 					     STAEMENTS))))
@@ -846,10 +846,10 @@
       (LAMBDA (X) 
 	      (PROG (Y) 
 		    (PUTPROP (SETQ X (CHARG X
-					    'MARKER:
+					    '"MARKER:"
 					    '(MARKER TO BE ADDED)))
 			     (LIST (SETQ Y
-					 (REQUEST 'PARENT:
+					 (REQUEST '"PARENT:"
 						  '(NODE TO
 							 WHICH
 							 IT
@@ -863,7 +863,7 @@
 			     'SYSTEM)))
       SHOW
       (LAMBDA (X) (TREEPRINT (OR (CHARG X
-					'MARKER:
+					'"MARKER:"
 					'(SEMANTIC MARKER
 						   WHOSE
 						   SUBSETS
@@ -891,13 +891,13 @@
 (defun-fexpr DEFINE (A) 
        (PROG (FE TYPE MARK REST TR) 
 	     (SETQ A  (COND  (A (CAR A))
-                      (T  (REQUEST 'WORD: '( ENGLISH WORD TO
+                      (T  (REQUEST '"WORD:" '( ENGLISH WORD TO
                                             BE DEFINED)))))
 	     (SETQ TYPE
 		   (QUERY '(NOUN OR VERB?)
 			  '(NOUN VERB)
 			  '(OTHER TYPES MUST BE DEFINED IN LISP)))
-	MAR  (OR (SETQ MARK (REQUEST 'MARKERS:
+	MAR  (OR (SETQ MARK (REQUEST '"MARKERS:"
 				     '(LIST OF
 					    SEMANTIC
 					    MARKERS
@@ -925,10 +925,10 @@
 		  (LIST
 		   'OBJECT
 		   (LIST
-		    'MARKERS:
+		    '"MARKERS:"
 		    MARK
-		    'PROCEDURE:
-		    (LIS2FY (REQUEST 'PROCEDURE:
+		    '"PROCEDURE:"
+		    (LIS2FY (REQUEST '"PROCEDURE:"
 				     '(EXPRESSION OR
 						  LIST
 						  OF
@@ -970,7 +970,7 @@
 	     (SETQ 
 	      REST
 	      (LIST (LIST (LISTIFY (REQUEST '(RESTRICTIONS ON
-							   SUBJECT:)
+							   "SUBJECT:")
 					    '(LIST OF
 						   SEMANTIC
 						   MARKERS))))))
@@ -980,7 +980,7 @@
 		REST
 		(NCONC REST
 		       (LIST (LISTIFY (REQUEST '(RESTRICTIONS ON
-							      OBJECT:)
+							      "OBJECT:")
 					       '(LIST OF
 						      SEMANTIC
 						      MARKERS)))))))
@@ -991,12 +991,12 @@
 		 'VB
 		 (LIST
 		  'RELATION
-		  (LIST 'MARKERS:
+		  (LIST '"MARKERS:"
 			MARK
-			'RESTRICTIONS:
+			'"RESTRICTIONS:"
 			REST
-			'PROCEDURE:
-			(LIS2FY (REQUEST 'PROCEDURE:
+			'"PROCEDURE:"
+			(LIS2FY (REQUEST '"PROCEDURE:"
 					 '(LIST OF
 						EXPRESSIONS
 						TO
@@ -1012,16 +1012,16 @@
 						RELATION
 						--
 						USE
-						#1
+						"#1"
 						FOR
-						SUBJECT/,
-						#2
+						"SUBJECT,"
+						"#2"
 						FOR
-						OBJECT/.E/.G/.
-						(#SUPPORT #1 #2)
+						"OBJECT. E.G."
+						"(#SUPPORT #1 #2)"
 						OR
-						((#HAPPY #1)
-						 (#SMILING #1)))))))))
+						"((#HAPPY #1)
+						 (#SMILING #1))")))))))
 	       'SEMANTICS)
 	      (RETURN T))))
 

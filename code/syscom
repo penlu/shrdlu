@@ -379,6 +379,7 @@
 
 ; sometimes ERT is called without a message, i.e. (ERT)
 ; ERTEX handles this by mapping print3 over messages, so missing message is no problem
+; TODO this is probably a fexpr for a reason...
 (defun ERT (&optional MESSAGE) (ERTEX MESSAGE NIL T)) 		       ;ALWAYS STOPS, NEVER CAUSES ABORTION. USED FOR
 								       ;GUARENTEED STOPS AS IN DEBUGGING OR ETAOIN
 
@@ -631,7 +632,10 @@
 
 (SETQ WPLINEL 72.) 
 
-(defun-fexpr DEFS (L) 
+; evidently L was meant to be a list of things in DEFS
+; what dialect of lisp was this even for?
+; &rest here, so that it can accept the arguments it wants to
+(defun-fexpr DEFS (&rest L) 
        (PROG (A) 
 	     (AND (NULL (CDR L)) (RETURN L))
 	     (SETQ A (CAR L))
